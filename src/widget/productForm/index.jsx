@@ -3,11 +3,13 @@ import React, { useState, useEffect } from 'react';
 import Row from '../../layout/row';
 import Col from '../../layout/col';
 
+import units from '../../consts/units';
+
 import './style.css';
 
 export default props => {
   const [name, setName] = useState('');
-  const [bacthQtd, setBatchQtd] = useState(0);
+  const [batchQtd, setBatchQtd] = useState(0);
   const [ingredients, setIngredients] = useState([]);
   const [productionInputs, setProductionInputs] = useState([]);
   const [batchPerMonth, setBatchPerMonth] = useState([]);
@@ -18,7 +20,7 @@ export default props => {
       const { item } = props;
 
       setName(item.name);
-      setBatchQtd(item.bacthQtd);
+      setBatchQtd(item.batchQtd);
       setIngredients(item.ingredients);
       setProductionInputs(item.productionInputs);
       setBatchPerMonth(item.batchPerMonth);
@@ -26,7 +28,7 @@ export default props => {
     }
   }, []);
 
-  const constUpdateIngredientItem = (id, item) => {
+  const updateIngredientItem = (id, item) => {
     const ingredient = ingredients.find(x => x.id == id);
     ingredient.name = item.name;
     ingredient.qtd = item.qtd;
@@ -48,19 +50,18 @@ export default props => {
       <Row>
         Informe quantos pães você produzirá por fornada:{' '}
         <input
-          value={bacthQtd}
-          onChanche={e => setBatchQtd(e.target.value)}
+          value={batchQtd}
+          onChanche={e => setBatchQtd(parseInt(e.target.value))}
           type="text"
         />
       </Row>
       <Row>
-        Crie sua lista de ingredientes para uma fornada de {bacthQtd} pães do
+        Crie sua lista de ingredientes para uma fornada de {batchQtd} pães do
         tipo {name}
       </Row>
       <Row>
         <Col>Ingrediente</Col>
         <Col>Unid. Medida</Col>
-        <Col>Preço</Col>
         <Col>Preço</Col>
         <Col>Quantidade</Col>
         <Col>Custo</Col>
@@ -73,12 +74,60 @@ export default props => {
               value={item.name}
               type="text"
               onChange={e => {
-                constUpdateIngredientItem(item.id, {
+                updateIngredientItem(item.id, {
                   ...item,
                   name: e.target.value
                 });
               }}
             />
+          </Col>
+
+          <Col>
+            <select
+              value={item.unity}
+              onChange={x =>
+                updateIngredientItem(item.id, {
+                  ...item,
+                  unity: e.target.value
+                })
+              }
+            >
+              {units.map(x => (
+                <option value={x}>{x}</option>
+              ))}
+            </select>
+          </Col>
+
+          <Col>
+            <input
+              value={item.cost}
+              type="text"
+              onChange={e => {
+                updateIngredientItem(item.id, {
+                  ...item,
+                  cost: parseFloat(e.target.value)
+                });
+              }}
+            />
+          </Col>
+
+          <Col>
+            <input
+              value={item.qtd}
+              type="text"
+              onChange={e => {
+                updateIngredientItem(item.id, {
+                  ...item,
+                  qtd: parseInt(e.target.value)
+                });
+              }}
+            />
+          </Col>
+
+          <Col>{item.cost * item.qtd}</Col>
+
+          <Col>
+            <i className="fa fa-trash-o" onClick={() => {}}></i>
           </Col>
         </Row>
       ))}
