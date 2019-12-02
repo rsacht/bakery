@@ -6,19 +6,31 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123));
-    background-image: linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123));
-    background-position-x: initial;
-    background-position-y: initial;
-    background-size: initial;
-    background-repeat-x: initial;
-    background-repeat-y: initial;
-    background-attachment: initial;
-    background-origin: initial;
-    background-clip: initial;
-    background-color: initial;
+  background-image: linear-gradient(
+    to right,
+    rgb(234, 205, 163),
+    rgb(214, 174, 123)
+  );
+  background-position-x: initial;
+  background-position-y: initial;
+  background-size: initial;
+  background-repeat-x: initial;
+  background-repeat-y: initial;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+i {
+  cursor: pointer;
+}
+
+.center {
+  text-align: center;
 }
