@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Row from "../../layout/row";
 import Col from "../../layout/col";
 
+import ProductForm from '../productForm';
+
 import "./style.css";
 
 export default props => {
@@ -42,7 +44,7 @@ export default props => {
   ]);
 
   const handleNewItem = () => {};
-  const handleEdit = id => {};
+  const handleItemStore = item => {};
 
   const handleDelete = id => {
     setProductionCosts(productionCosts.filter(item => item.id != id));
@@ -101,7 +103,9 @@ export default props => {
             </Col>
           </Row>
           <div class="collapse" id={`item-production-cost-${item.id}`}>
-            <div class="card card-body">{item.name}</div>
+            <div class="card card-body">
+              <ProductForm item={item} onUpdate={handleItemStore} />
+            </div>
           </div>
         </>
       ))}
