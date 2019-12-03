@@ -2,9 +2,12 @@
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 }
 h3{
-    font-size: 3em;
+    font-size: 4em;
     color: #fff;
 }
 p{
     color: #fff;
+}
+.div.row{
+    background-color: #fff;
 }
