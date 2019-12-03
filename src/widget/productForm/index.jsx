@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import PriceInput from "../PriceInput";
 
-import Row from '../../layout/row';
-import Col from '../../layout/col';
+import Row from "../../layout/row";
+import Col from "../../layout/col";
 
-import units from '../../consts/units';
+import units from "../../consts/units";
 
-import './style.css';
+import "./style.css";
 
 export default props => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [batchQtd, setBatchQtd] = useState(0);
   const [ingredients, setIngredients] = useState([]);
   const [productionInputs, setProductionInputs] = useState([]);
   const [batchPerMonth, setBatchPerMonth] = useState([]);
   const [price, setPrice] = useState([]);
+
+  // form de novo ingrediente states
+  const [showIngredientNewForm, setShowIngredientNewForm] = useState(false);
+  const [newIngName, setNewIngName] = useState("");
+  const [newIngUnity, setNewIngUnity] = useState("KG");
+  const [newIngCost, setNewIngCost] = useState("");
+  const [newIngQtd, setNewIngQtd] = useState("");
 
   useEffect(() => {
     if (props.item) {
@@ -37,22 +45,65 @@ export default props => {
     setIngredients([...ingredients]);
   };
 
+  const handleNewIngredient = () => {
+    const newIngredient = {
+      id: Date.now(),
+      name: newIngName,
+      unity: newIngUnity,
+      cost: newIngCost,
+      qtd: newIngQtd
+    };
+
+    setIngredients([...ingredients, newIngredient]);
+    setNewIngCost(0);
+    setNewIngName("");
+    setNewIngQtd(0);
+    setNewIngUnity("KG");
+    setShowIngredientNewForm(false);
+  };
+
+  const handleSubmit = () => {
+    const id = props.item == null ? null : props.item.id;
+    const updatedItem = {
+      id,
+      name,
+      batchQtd,
+      ingredients,
+      batchPerMonth,
+      price
+    };
+    props.onUpdate(updatedItem);
+  };
+
   return (
-    <>
+    <form
+      action="/"
+      method="post"
+      onSubmit={e => {
+        e.preventDefault();
+        handleSubmit();
+      }}
+    >
       <Row>
-        Produto:{' '}
+        Produto:{" "}
         <input
           value={name}
-          onChanche={e => setName(e.target.value)}
+          required="required"
+          onChange={e => setName(e.target.value)}
           type="text"
         />
       </Row>
       <Row>
-        Informe quantos pães você produzirá por fornada:{' '}
+        Informe quantos pães você produzirá por fornada:{" "}
         <input
+          required
           value={batchQtd}
-          onChanche={e => setBatchQtd(parseInt(e.target.value))}
-          type="text"
+          onChange={e => {
+            setBatchQtd(parseInt(e.target.value || 0));
+            e.target.value = parseInt(e.target.value || 0);
+          }}
+          min="1"
+          type="number"
         />
       </Row>
       <Row>
@@ -71,6 +122,7 @@ export default props => {
         <Row key={item.id}>
           <Col>
             <input
+              required
               value={item.name}
               type="text"
               onChange={e => {
@@ -85,7 +137,7 @@ export default props => {
           <Col>
             <select
               value={item.unity}
-              onChange={x =>
+              onChange={e =>
                 updateIngredientItem(item.id, {
                   ...item,
                   unity: e.target.value
@@ -99,26 +151,26 @@ export default props => {
           </Col>
 
           <Col>
-            <input
+            <PriceInput
               value={item.cost}
-              type="text"
+              required
               onChange={e => {
                 updateIngredientItem(item.id, {
                   ...item,
-                  cost: parseFloat(e.target.value)
+                  cost: e.target.value
                 });
               }}
             />
           </Col>
 
           <Col>
-            <input
+            <PriceInput
               value={item.qtd}
-              type="text"
+              required
               onChange={e => {
                 updateIngredientItem(item.id, {
                   ...item,
-                  qtd: parseInt(e.target.value)
+                  qtd: e.target.value
                 });
               }}
             />
@@ -131,7 +183,111 @@ export default props => {
           </Col>
         </Row>
       ))}
-      #{props.item.id} - {props.item.name}
-    </>
+      {showIngredientNewForm === true && (
+        <Row>
+          <Col>
+            <input
+              value={newIngName}
+              required
+              type="text"
+              onChange={e => setNewIngName(e.target.value)}
+            />
+          </Col>
+
+          <Col>
+            <select
+              required
+              value={newIngUnity}
+              onChange={e => setNewIngUnity(e.target.value)}
+            >
+              {units.map(x => (
+                <option value={x}>{x}</option>
+              ))}
+            </select>
+          </Col>
+
+          <Col>
+            <input
+              value={newIngCost}
+              required
+              type="number"
+              min="1"
+              onChange={e => {
+                setNewIngCost(parseInt(e.target.value || 0));
+                e.target.value = parseInt(e.target.value || 0);
+              }}
+            />
+          </Col>
+
+          <Col>
+            <input
+              value={newIngQtd}
+              required
+              type="number"
+              min="1"
+              onChange={e => {
+                setNewIngQtd(parseInt(e.target.value || 0));
+                e.target.value = parseInt(e.target.value || 0);
+              }}
+            />
+          </Col>
+
+          <Col>{newIngCost * newIngQtd}</Col>
+
+          <Col>
+            <button
+              type="button"
+              className="btn btn-primary small btn-small"
+              onClick={handleNewIngredient}
+            >
+              Salvar
+            </button>{" "}
+          </Col>
+        </Row>
+      )}
+      <Row>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => {
+            setShowIngredientNewForm(true);
+          }}
+        >
+          + Adicionar Ingrediente
+        </button>
+      </Row>
+
+      <Row>
+        informe quantas fornadas de {name} você fará por mês:
+        <input
+          type="number"
+          required
+          min="1"
+          value={batchPerMonth}
+          onChange={e => {
+            setBatchPerMonth(parseInt(e.target.value || 0));
+            e.target.value = parseInt(e.target.value || 0);
+          }}
+        />
+      </Row>
+
+      <Row>
+        informe o preço de venda por unidade do pão {name}:
+        <input
+          required
+          type="number"
+          min="1"
+          value={price}
+          onChange={e => {
+            setPrice(parseFloat(e.target.value || 0));
+            e.target.value = parseInt(e.target.value || 0);
+          }}
+        />
+      </Row>
+
+      <Row>
+        <input type="submit" className="btn btn-primary" value="Salvar Dados" />
+      </Row>
+    </form>
   );
 };
