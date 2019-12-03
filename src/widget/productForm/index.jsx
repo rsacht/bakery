@@ -83,7 +83,7 @@ export default props => {
     };
     // console.log(updatedItem);
     props.onUpdate(updatedItem);
-    clearInputs();
+    if (id == null) clearInputs();
   };
 
   return (
@@ -190,7 +190,12 @@ export default props => {
           <Col>{item.cost * item.qtd}</Col>
 
           <Col>
-            <i className="fa fa-trash-o" onClick={() => {}}></i>
+            <i
+              className="fa fa-trash-o"
+              onClick={() => {
+                setIngredients(ingredients.filter(x => x.id !== item.id));
+              }}
+            ></i>
           </Col>
         </Row>
       ))}

@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 
+import { useSelector, useDispatch } from "react-redux";
+import { Creators as FixedCostActions } from "../../store/ducks/fixedCosts";
+
 import Row from "../../layout/row";
 import Col from "../../layout/col";
 
 import "./style.css";
 
 export default props => {
-  const [fixedCosts, setFixedCosts] = useState([
-    { id: 1, description: "Aluguel", cost: 1500 },
-    { id: 2, description: "Salários", cost: 1000 },
-    { id: 3, description: "Encargos Sociais", cost: 400 }
-  ]);
-
   const [showAddForm, setShowAddForm] = useState(false);
   const [newName, setNewName] = useState("");
   const [newCost, setNewCost] = useState(0);
 
-  // console.log(Date.now());
+  const fixedCosts = useSelector(state => state.fixedCosts);
+  console.log(fixedCosts);
+  const dispatch = useDispatch();
 
   const handleNewItem = () => {
     if (!newName || newName == "") {
@@ -24,14 +23,16 @@ export default props => {
       return;
     }
 
-    setFixedCosts([
-      ...fixedCosts,
-      { id: Date.now(), description: newName, cost: parseFloat(newCost) }
-    ]);
+    const newFixedCost = {
+      id: Date.now(),
+      description: newName,
+      cost: parseFloat(newCost)
+    };
+    dispatch(FixedCostActions.addFixedCost(newFixedCost));
   };
 
   const handleDelete = id => {
-    setFixedCosts(fixedCosts.filter(item => item.id != id));
+    dispatch(FixedCostActions.delFixedCost(id));
   };
 
   return (
