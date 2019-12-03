@@ -1,16 +1,16 @@
 export const Types = {
-  ADD: "todos/ADD_FIXED_COST",
-  DEL: "todos/DEL_FIXED_COST"
+  ADD: 'todos/ADD_FIXED_COST',
+  DEL: 'todos/DEL_FIXED_COST'
 };
 
 const INITIAL_STATE_FIXED_COST = [
-  { id: 1, description: "Aluguel", cost: 1500 },
-  { id: 2, description: "Salários", cost: 1000 },
-  { id: 3, description: "Encargos Sociais", cost: 400 }
+  { id: 1, description: 'Aluguel', cost: 1500 },
+  { id: 2, description: 'Salários', cost: 1000 },
+  { id: 3, description: 'Encargos Sociais', cost: 400 }
 ];
 
 export default function fixedCosts(state = INITIAL_STATE_FIXED_COST, action) {
-  console.log("state", state);
+  console.log('state', state);
 
   switch (action.type) {
     case Types.ADD:

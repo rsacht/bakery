@@ -1,25 +1,24 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { useSelector, useDispatch } from "react-redux";
-import { Creators as FixedCostActions } from "../../store/ducks/fixedCosts";
+import { useSelector, useDispatch } from 'react-redux';
+import { Creators as FixedCostActions } from '../../store/ducks/fixedCosts';
 
-import Row from "../../layout/row";
-import Col from "../../layout/col";
+import Row from '../../layout/row';
+import Col from '../../layout/col';
 
-import "./style.css";
+import './style.css';
 
 export default props => {
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newName, setNewName] = useState("");
+  const [newName, setNewName] = useState('');
   const [newCost, setNewCost] = useState(0);
 
   const fixedCosts = useSelector(state => state.fixedCosts);
-  console.log(fixedCosts);
   const dispatch = useDispatch();
 
   const handleNewItem = () => {
-    if (!newName || newName == "") {
-      alert("Insira uma descrição para o item.");
+    if (!newName || newName == '') {
+      alert('Insira uma descrição para o item.');
       return;
     }
 
@@ -48,7 +47,7 @@ export default props => {
           <Col>{item.description}</Col>
           <Col>{item.cost}</Col>
           <Col>
-            {" "}
+            {' '}
             <i
               onClick={() => {
                 handleDelete(item.id);
@@ -62,7 +61,7 @@ export default props => {
         {showAddForm == true && (
           <>
             <Col>
-              Nome:{" "}
+              Nome:{' '}
               <input
                 value={newName}
                 onChange={e => setNewName(e.target.value)}
@@ -70,7 +69,7 @@ export default props => {
               />
             </Col>
             <Col>
-              Valor:{" "}
+              Valor:{' '}
               <input
                 value={newCost}
                 onChange={e => setNewCost(e.target.value)}
@@ -99,7 +98,7 @@ export default props => {
         >
           + Adicionar Item
         </button>
-        Total de custos fixos: R${" "}
+        Total de custos fixos: R${' '}
         {parseFloat(
           fixedCosts.reduce((sum, item) => sum + item.cost, 0)
         ).toFixed(2)}
