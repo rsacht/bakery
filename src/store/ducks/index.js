@@ -1,5 +1,6 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
-import fixedCosts from "./fixedCosts";
+import fixedCosts from './fixedCosts';
+import productionCosts from './productionCosts';
 
-export default combineReducers({ fixedCosts });
+export default combineReducers({ fixedCosts, productionCosts });

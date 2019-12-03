@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import PriceInput from "../PriceInput";
+import React, { useState, useEffect } from 'react';
+import PriceInput from '../PriceInput';
 
-import Row from "../../layout/row";
-import Col from "../../layout/col";
+import Row from '../../layout/row';
+import Col from '../../layout/col';
 
-import units from "../../consts/units";
+import units from '../../consts/units';
 
-import "./style.css";
+import './style.css';
 
 export default props => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const [batchQtd, setBatchQtd] = useState(0);
   const [ingredients, setIngredients] = useState([]);
   const [productionInputs, setProductionInputs] = useState([]);
@@ -18,10 +18,10 @@ export default props => {
 
   // form de novo ingrediente states
   const [showIngredientNewForm, setShowIngredientNewForm] = useState(false);
-  const [newIngName, setNewIngName] = useState("");
-  const [newIngUnity, setNewIngUnity] = useState("KG");
-  const [newIngCost, setNewIngCost] = useState("");
-  const [newIngQtd, setNewIngQtd] = useState("");
+  const [newIngName, setNewIngName] = useState('');
+  const [newIngUnity, setNewIngUnity] = useState('KG');
+  const [newIngCost, setNewIngCost] = useState('');
+  const [newIngQtd, setNewIngQtd] = useState('');
 
   useEffect(() => {
     if (props.item) {
@@ -37,7 +37,7 @@ export default props => {
   }, []);
 
   const clearInputs = () => {
-    setName("");
+    setName('');
     setBatchQtd(0);
     setIngredients([]);
     setProductionInputs([]);
@@ -65,9 +65,9 @@ export default props => {
 
     setIngredients([...ingredients, newIngredient]);
     setNewIngCost(0);
-    setNewIngName("");
+    setNewIngName('');
     setNewIngQtd(0);
-    setNewIngUnity("KG");
+    setNewIngUnity('KG');
     setShowIngredientNewForm(false);
   };
 
@@ -81,9 +81,10 @@ export default props => {
       batchPerMonth,
       price
     };
-    // console.log(updatedItem);
+
     props.onUpdate(updatedItem);
     if (id == null) clearInputs();
+    alert('atualizado');
   };
 
   return (
@@ -96,7 +97,7 @@ export default props => {
       }}
     >
       <Row>
-        Produto:{" "}
+        Produto:{' '}
         <input
           value={name}
           required="required"
@@ -105,7 +106,7 @@ export default props => {
         />
       </Row>
       <Row>
-        Informe quantos pães você produzirá por fornada:{" "}
+        Informe quantos pães você produzirá por fornada:{' '}
         <input
           required
           value={batchQtd}
@@ -249,7 +250,7 @@ export default props => {
               onClick={handleNewIngredient}
             >
               Salvar
-            </button>{" "}
+            </button>{' '}
           </Col>
         </Row>
       )}
@@ -295,6 +296,16 @@ export default props => {
 
       <Row>
         <input type="submit" className="btn btn-primary" value="Salvar Dados" />
+        <a
+          href="#"
+          className="btn btn-secundary"
+          data-toggle="collapse"
+          data-target={`#item-production-cost-${
+            props.item ? props.item.id : 'new'
+          }`}
+        >
+          fechar
+        </a>
       </Row>
     </form>
   );

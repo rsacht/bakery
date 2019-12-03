@@ -1,76 +1,29 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import Row from "../../layout/row";
-import Col from "../../layout/col";
+import { useSelector, useDispatch } from 'react-redux';
+import { Creators as ProductionCostsActions } from '../../store/ducks/productionCosts';
 
-import ProductForm from "../productForm";
+import Row from '../../layout/row';
+import Col from '../../layout/col';
 
-import "./style.css";
+import ProductForm from '../productForm';
+
+import './style.css';
 
 export default props => {
-  const [productionCosts, setProductionCosts] = useState([
-    {
-      id: 1,
-      name: "Pão Frances",
-      batchQtd: 45,
-      ingredients: [
-        { id: 1, name: "Trigo", unity: "KG", cost: 10.5, qtd: 4 },
-        { id: 2, name: "Leite", unity: "L", cost: 10, qtd: 6.2 },
-        { id: 3, name: "Ovos", unity: "UN", cost: 10.75, qtd: 2 },
-        { id: 4, name: "Gás", unity: "KG", cost: 10, qtd: 6 },
-        { id: 5, name: "Energia Elétrica", unity: "KWH", cost: 10, qtd: 2 }
-      ],
-      batchPerMonth: 30,
-      price: 10
-    },
-    {
-      id: 2,
-      name: "Pão de Milho",
-      batchQtd: 45,
-      ingredients: [
-        { id: 1, name: "Trigo", unity: "KG", cost: 10, qtd: 4 },
-        { id: 2, name: "Leite", unity: "LT", cost: 10, qtd: 6 },
-        { id: 3, name: "Ovos", unity: "UN", cost: 10, qtd: 2 }
-      ],
-      productionInputs: [
-        { id: 1, name: "Gás", unity: "KG", cost: 10, qtd: 6 },
-        { id: 2, name: "Energia Elétrica", unity: "KWH", cost: 10, qtd: 2 }
-      ],
-      batchPerMonth: 30,
-      price: 10
-    }
-  ]);
-
-  const handleNewItem = () => {};
+  const productionCosts = useSelector(state => state.productionCosts);
+  const dispatch = useDispatch();
 
   const handleItemStore = updatedItem => {
-    const productCost = productionCosts.find(x => x.id === updatedItem.id);
-    if (productCost) {
-      // atualizando
-      productCost.name = updatedItem.name;
-      productCost.batchPerMonth = updatedItem.batchPerMonth;
-      productCost.ingredients = updatedItem.ingredients;
-      productCost.batchQtd = updatedItem.batchQtd;
-      productCost.price = updatedItem.price;
-      setProductionCosts([...productionCosts]);
-      alert("atualizado");
-    } else {
-      // criando novo
-      updatedItem.id = Date.now();
-      setProductionCosts([...productionCosts, updatedItem]);
-      alert("Novo item cadastrado");
-    }
+    dispatch(ProductionCostsActions.storeProductionCost(updatedItem));
   };
 
   const handleDelete = id => {
-    setProductionCosts(productionCosts.filter(item => item.id != id));
+    dispatch(ProductionCostsActions.delProductionCost(id));
   };
+
   const handleClone = id => {
-    let clone = { ...productionCosts.find(item => item.id == id) };
-    clone.name += " (copy)";
-    clone.id = Date.now();
-    console.log(clone);
-    setProductionCosts([clone, ...productionCosts]);
+    dispatch(ProductionCostsActions.cloneProductionCost(id));
   };
 
   return (
