@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PriceInput from '../PriceInput';
 
+import CurrencyInput from 'react-currency-input';
+
 import Row from '../../layout/row';
 import Col from '../../layout/col';
 
@@ -163,28 +165,31 @@ export default props => {
           </Col>
 
           <Col>
-            <PriceInput
+            <CurrencyInput
               value={item.cost}
-              required
-              onChange={e => {
+              decimalSeparator=","
+              thousandSeparator="."
+              onChangeEvent={(event, maskedvalue, floatvalue) =>
                 updateIngredientItem(item.id, {
                   ...item,
-                  cost: e.target.value
-                });
-              }}
+                  cost: floatvalue
+                })
+              }
             />
           </Col>
 
           <Col>
-            <PriceInput
+            <CurrencyInput
               value={item.qtd}
-              required
-              onChange={e => {
+              decimalSeparator=","
+              thousandSeparator="."
+              precision={3}
+              onChangeEvent={(event, maskedvalue, floatvalue) =>
                 updateIngredientItem(item.id, {
                   ...item,
-                  qtd: e.target.value
-                });
-              }}
+                  qtd: floatvalue
+                })
+              }
             />
           </Col>
 
@@ -229,20 +234,26 @@ export default props => {
           </Col>
 
           <Col>
-            <PriceInput
+            <CurrencyInput
               value={newIngCost}
-              required
-              onChange={e => {
-                setNewIngCost(e.target.value);
-              }}
+              decimalSeparator=","
+              thousandSeparator="."
+              precision={2}
+              onChangeEvent={(event, maskedvalue, floatvalue) =>
+                setNewIngCost(floatvalue)
+              }
             />
           </Col>
 
           <Col>
-            <PriceInput
+            <CurrencyInput
               value={newIngQtd}
-              required
-              onChange={e => setNewIngQtd(e.target.value)}
+              decimalSeparator=","
+              thousandSeparator="."
+              precision={2}
+              onChangeEvent={(event, maskedvalue, floatvalue) =>
+                setNewIngQtd(floatvalue)
+              }
             />
           </Col>
 
@@ -287,15 +298,14 @@ export default props => {
 
       <Row>
         informe o preço de venda por unidade do pão {name}:
-        <input
-          required
-          type="number"
-          min="1"
+        <CurrencyInput
           value={price}
-          onChange={e => {
-            setPrice(parseFloat(e.target.value || 0));
-            e.target.value = parseInt(e.target.value || 0);
-          }}
+          decimalSeparator=","
+          thousandSeparator="."
+          precision={2}
+          onChangeEvent={(event, maskedvalue, floatvalue) =>
+            setPrice(floatvalue)
+          }
         />
       </Row>
 

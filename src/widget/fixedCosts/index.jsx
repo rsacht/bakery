@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Creators as FixedCostActions } from '../../store/ducks/fixedCosts';
 
+import CurrencyInput from 'react-currency-input';
+
 import Row from '../../layout/row';
 import Col from '../../layout/col';
 
@@ -45,7 +47,7 @@ export default props => {
       {fixedCosts.map(item => (
         <Row key={item.id}>
           <Col>{item.description}</Col>
-          <Col>{item.cost}</Col>
+          <Col>R$ {item.cost.toFixed(2).replace('.', ',')}</Col>
           <Col>
             {' '}
             <i
@@ -70,10 +72,14 @@ export default props => {
             </Col>
             <Col>
               Valor:{' '}
-              <input
+              <CurrencyInput
                 value={newCost}
-                onChange={e => setNewCost(e.target.value)}
-                type="number"
+                decimalSeparator=","
+                thousandSeparator="."
+                precision={2}
+                onChangeEvent={(event, maskedvalue, floatvalue) =>
+                  setNewCost(floatvalue)
+                }
               />
             </Col>
             <Col>
