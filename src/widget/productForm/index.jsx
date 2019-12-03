@@ -36,6 +36,15 @@ export default props => {
     }
   }, []);
 
+  const clearInputs = () => {
+    setName("");
+    setBatchQtd(0);
+    setIngredients([]);
+    setProductionInputs([]);
+    setBatchPerMonth(0);
+    setPrice(0);
+  };
+
   const updateIngredientItem = (id, item) => {
     const ingredient = ingredients.find(x => x.id == id);
     ingredient.name = item.name;
@@ -72,7 +81,9 @@ export default props => {
       batchPerMonth,
       price
     };
+    // console.log(updatedItem);
     props.onUpdate(updatedItem);
+    clearInputs();
   };
 
   return (
@@ -207,28 +218,20 @@ export default props => {
           </Col>
 
           <Col>
-            <input
+            <PriceInput
               value={newIngCost}
               required
-              type="number"
-              min="1"
               onChange={e => {
-                setNewIngCost(parseInt(e.target.value || 0));
-                e.target.value = parseInt(e.target.value || 0);
+                setNewIngCost(e.target.value);
               }}
             />
           </Col>
 
           <Col>
-            <input
+            <PriceInput
               value={newIngQtd}
               required
-              type="number"
-              min="1"
-              onChange={e => {
-                setNewIngQtd(parseInt(e.target.value || 0));
-                e.target.value = parseInt(e.target.value || 0);
-              }}
+              onChange={e => setNewIngQtd(e.target.value)}
             />
           </Col>
 

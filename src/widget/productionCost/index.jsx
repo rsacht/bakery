@@ -45,12 +45,21 @@ export default props => {
 
   const handleItemStore = updatedItem => {
     const productCost = productionCosts.find(x => x.id === updatedItem.id);
-    productCost.name = updatedItem.name;
-    productCost.batchPerMonth = updatedItem.batchPerMonth;
-    productCost.ingredients = updatedItem.ingredients;
-    productCost.batchQtd = updatedItem.batchQtd;
-    productCost.price = updatedItem.price;
-    setProductionCosts([...productionCosts]);
+    if (productCost) {
+      // atualizando
+      productCost.name = updatedItem.name;
+      productCost.batchPerMonth = updatedItem.batchPerMonth;
+      productCost.ingredients = updatedItem.ingredients;
+      productCost.batchQtd = updatedItem.batchQtd;
+      productCost.price = updatedItem.price;
+      setProductionCosts([...productionCosts]);
+      alert("atualizado");
+    } else {
+      // criando novo
+      updatedItem.id = Date.now();
+      setProductionCosts([...productionCosts, updatedItem]);
+      alert("Novo item cadastrado");
+    }
   };
 
   const handleDelete = id => {
@@ -123,6 +132,21 @@ export default props => {
           </div>
         </>
       ))}
+
+      <Row>
+        <button
+          className="btn btn-primary"
+          data-toggle="collapse"
+          data-target={`#item-production-cost-new`}
+        >
+          Adicionar Produto
+        </button>
+      </Row>
+      <div class="collapse" id={`item-production-cost-new`}>
+        <div class="card card-body">
+          <ProductForm onUpdate={handleItemStore} />
+        </div>
+      </div>
     </>
   );
 };
