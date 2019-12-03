@@ -8,11 +8,11 @@ const INITIAL_STATE_PRODUCTION_COST = [
   {
     id: 1,
     name: 'Pão Frances',
-    batchQtd: 45,
+    batchQtd: 15,
     ingredients: [
-      { id: 1, name: 'Trigo', unity: 'KG', cost: 10.5, qtd: 4 },
-      { id: 2, name: 'Leite', unity: 'L', cost: 10, qtd: 6.2 },
-      { id: 3, name: 'Ovos', unity: 'UN', cost: 10.75, qtd: 2 },
+      { id: 1, name: 'Trigo', unity: 'KG', cost: 10, qtd: 4 },
+      { id: 2, name: 'Leite', unity: 'L', cost: 10, qtd: 6 },
+      { id: 3, name: 'Ovos', unity: 'UN', cost: 10, qtd: 2 },
       { id: 4, name: 'Gás', unity: 'KG', cost: 10, qtd: 6 },
       { id: 5, name: 'Energia Elétrica', unity: 'KWH', cost: 10, qtd: 2 }
     ],
@@ -22,7 +22,7 @@ const INITIAL_STATE_PRODUCTION_COST = [
   {
     id: 2,
     name: 'Pão de Milho',
-    batchQtd: 45,
+    batchQtd: 15,
     ingredients: [
       { id: 1, name: 'Trigo', unity: 'KG', cost: 10, qtd: 4 },
       { id: 2, name: 'Leite', unity: 'LT', cost: 10, qtd: 6 },

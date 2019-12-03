@@ -45,10 +45,14 @@ export default props => {
           <Row key={item.id}>
             <Col className="col">{item.name}</Col>
             <Col className="col-2">
-              {item.ingredients.reduce(
-                (acumulado, item) => acumulado + item.cost * item.qtd,
-                0
-              )}
+              R${' '}
+              {item.ingredients
+                .reduce(
+                  (acumulado, item) => acumulado + item.cost * item.qtd,
+                  0
+                )
+                .toFixed(2)
+                .replace('.', ',')}
             </Col>
             <Col className="col-3">
               <Row>

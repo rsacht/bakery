@@ -188,7 +188,12 @@ export default props => {
             />
           </Col>
 
-          <Col>{item.cost * item.qtd}</Col>
+          <Col>
+            R${' '}
+            {parseFloat(item.cost * item.qtd)
+              .toFixed(2)
+              .replace('.', ',')}
+          </Col>
 
           <Col>
             <i

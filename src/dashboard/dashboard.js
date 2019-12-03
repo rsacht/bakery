@@ -27,7 +27,7 @@ export default props => {
 
   // faturamento
   const incomes = productionCosts.reduce(
-    (sum, item) => sum + item.batchPerMonth * item.bacthQtd * item.price,
+    (sum, item) => sum + item.batchPerMonth * item.batchQtd * item.price,
     0
   );
 
