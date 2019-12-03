@@ -9,7 +9,7 @@ class Dashboard extends Component {
     render(){
         return(
             <div className='container fluid mw-75 bg-light shadow-sm'>
-                <ContentHeader title='Dashboard' small='Versão 1.0' />
+                <ContentHeader title=' ' small='' />
                 <Content>
                     <Row>
                         <ValueBox cols='12 4' color='danger'  value='R$ 10' text='Custos'/>
